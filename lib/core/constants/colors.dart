@@ -12,6 +12,6 @@ class MyColors {
   static const amber = Color(0xFFD9A441);
 
   static const brick = Color(0xFFA3433A);
-
+  static const blood = Color.fromARGB(255, 103, 9, 0);
 
 }

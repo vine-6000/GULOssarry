@@ -3,39 +3,54 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:gerphis_game/Functions/Categories.dart';
 import 'package:gerphis_game/Functions/WordScrambler.dart';
-import 'package:gerphis_game/Pages/Levels/Level1Files/Buttons.dart';
-import 'package:gerphis_game/Pages/Levels/Level1Files/LoadingLvl1.dart';
+import 'package:gerphis_game/Pages/LevelManager/Buttons.dart';
+import 'package:gerphis_game/Pages/LevelManager/LoadingPage.dart';
 import 'package:gerphis_game/core/Widgets/CustomDialogs.dart';
 import 'package:gerphis_game/core/Widgets/Snakcbar.dart';
 import 'package:gerphis_game/core/constants/Fonts.dart';
 import 'package:gerphis_game/core/constants/colors.dart';
 import 'package:gerphis_game/core/constants/fontsizes.dart';
 
-class Level1 extends StatefulWidget {
-  const Level1({super.key});
+class LevelDisplay extends StatefulWidget {
+  final int categorycount;
+  final Color displayColor;
+  const LevelDisplay({
+    required this.categorycount,
+    required this.displayColor,
+    super.key,
+  });
 
   @override
-  State<Level1> createState() => _Level1State();
+  State<LevelDisplay> createState() => _LevelDisplayState();
 }
 
-class _Level1State extends State<Level1> {
+class _LevelDisplayState extends State<LevelDisplay> {
   List<String> userTyped = [];
-  int curLevel = 0;
-  int curDifficulty = 2;
+  int curQuestionCount = 0;
+  late int curCategory = widget.categorycount;
   int hintsRemaining = 5;
-  int counter = 5;
 
-  late int totalLetters = Category1.wordsToGuess[curLevel]
-      .replaceAll(RegExp(r'\s+'), '')
-      .length;
+  //Main
+  String get levelCategory => categories[curCategory].category;
+  String get levelDifficulty => categories[curCategory].difficulty;
+  String get levelwordtoguess =>
+      categories[curCategory].items[curQuestionCount].word;
+  String get levelHint => categories[curCategory].items[curQuestionCount].hint;
+  String get levelFact =>
+      categories[curCategory].items[curQuestionCount - 1].fact;
 
-  Timer? _timer;
+  //sub
+  int get totalQuestionCount => categories[curCategory].items.length;
+  int get totalCategoryCount => categories.length;
+  String get answerkey => levelwordtoguess.replaceAll(RegExp(r'\s+'), '');
+  int get lettersCount =>
+      levelwordtoguess.replaceAll(RegExp(r'\s+'), '').length;
+  late int totalLetters = lettersCount;
+
   void kyboardPressed(String userInput) {
     //add pinaka bago tinype ni user
     //limit amount of letters na pwede ma type
-    print("total let = $totalLetters");
-    if (userTyped.length < totalLetters) userTyped.add(userInput);
-    print(userTyped);
+    if (userTyped.length < lettersCount) userTyped.add(userInput);
     setState(() {});
   }
 
@@ -49,19 +64,24 @@ class _Level1State extends State<Level1> {
 
   void checkPressed() {
     String userimput = userTyped.join();
-    String answerkey = Category1.wordsToGuess[curLevel].replaceAll(
-      RegExp(r'\s+'),
-      '',
-    );
+
     if (userimput == answerkey) {
+      if (curQuestionCount == (totalQuestionCount - 1)) {
+        //Show this after the last question
+        finishedDialog(context, "CONGRATS!", "Level 1 Finished!");
+        showBeautifulSnackBar(
+          context,
+          message: "CORRECT!!",
+          type: SnackBarType.success,
+        );
+        return;
+      }
       setState(() {
         userTyped.clear();
-        curLevel++;
-        totalLetters = Category1.wordsToGuess[curLevel]
-            .replaceAll(RegExp(r'\s+'), '')
-            .length;
+        curQuestionCount++;
+        totalLetters = levelwordtoguess.replaceAll(RegExp(r'\s+'), '').length;
       });
-      dialogBox(context, "CONGRATS!", Category1.funFacts[curLevel]);
+      dialogBox(context, false, "CONGRATS!", levelFact);
       showBeautifulSnackBar(
         context,
         message: "CORRECT!!",
@@ -74,21 +94,21 @@ class _Level1State extends State<Level1> {
         type: SnackBarType.error,
       );
     }
-
-    print("$userimput = $answerkey, [${userimput = answerkey}]");
   }
 
   void hintPressed() {
-    dialogBox(context, "Hint!", Category1.hints[curLevel]);
+    dialogBox(context, true, "Hint!", levelHint);
     setState(() => hintsRemaining--);
   }
 
+  int timerCounter = 5;
+  Timer? _timer;
   void _startTimer() {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (counter > 0) {
+      if (timerCounter > 0) {
         setState(() {
-          counter--;
+          timerCounter--;
         });
       } else {
         timer.cancel();
@@ -98,7 +118,6 @@ class _Level1State extends State<Level1> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _startTimer();
   }
@@ -111,7 +130,7 @@ class _Level1State extends State<Level1> {
 
   @override
   Widget build(BuildContext context) {
-    return counter == 0
+    return timerCounter == 0
         ? Scaffold(
             body: SafeArea(
               child: SizedBox.expand(
@@ -128,14 +147,14 @@ class _Level1State extends State<Level1> {
                       Expanded(
                         child: Center(
                           child: DisplayWords(
-                            key: ValueKey(curLevel),
-                            curLvl: curLevel,
+                            key: ValueKey(curQuestionCount),
+                            levelword: levelwordtoguess,
                           ),
                         ),
                       ),
 
                       AnswerInput(
-                        curLvl: curLevel,
+                        levelWord: levelwordtoguess,
                         userInput: userTyped,
                         pressedHints: hintPressed,
                         pressedCheck: checkPressed,
@@ -151,7 +170,7 @@ class _Level1State extends State<Level1> {
               ),
             ),
           )
-        : LVL1LoadingWidget();
+        : LoadingPageWidget(categorycount: widget.categorycount);
   }
 
   Widget get category {
@@ -159,7 +178,7 @@ class _Level1State extends State<Level1> {
       width: 300,
       child: Tagesschrift(
         textAlign: TextAlign.center,
-        text: "Category: ${Category1.category}",
+        text: "Category: $levelCategory",
         fontsize: Fontsize.mobileH3,
       ),
     );
@@ -171,7 +190,7 @@ class _Level1State extends State<Level1> {
       child: Roboto(
         fontWeight: FontWeight.bold,
         textAlign: TextAlign.center,
-        text: "Lvl: ${curLevel + 1} / 5",
+        text: "Word: ${curQuestionCount + 1} / $totalQuestionCount",
         fontsize: Fontsize.mobileBody,
       ),
     );
@@ -235,70 +254,97 @@ class HintsPill extends StatelessWidget {
   }
 }
 
+double tileWidthFor(
+  String phrase,
+  double maxWidth, {
+  double maxTile = 30,
+  double minTile = 8,
+  double gap = 4, // padding on each side of a tile
+}) {
+  final words = phrase.trim().split(RegExp(r'\s+'));
+  final longest = words.map((w) => w.length).reduce((a, b) => a > b ? a : b);
+  final fit = maxWidth / longest - gap * 2;
+  return fit.clamp(minTile, maxTile).toDouble();
+}
+
 class DisplayWords extends StatefulWidget {
-  final int curLvl;
-  const DisplayWords({required this.curLvl, super.key});
+  final String levelword;
+  const DisplayWords({required this.levelword, super.key});
 
   @override
   State<DisplayWords> createState() => _DisplayWordsState();
 }
 
 class _DisplayWordsState extends State<DisplayWords> {
-  static double contwidth = 30;
-  static double contHeight = 40;
-  late final scrambled = scramble(Category1.wordsToGuess[widget.curLvl].trim());
+  late final scrambled = scramble(widget.levelword.trim());
   late final wordList = scrambled.split(RegExp(r'\s+'));
   //Split the strings into Words
   //display as many words in a row as possible..., if it doesent fit,
   //then dapat next words will be a row below
-
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      alignment: WrapAlignment.center,
-      runSpacing: 8,
-      spacing: 24, // gap between words
-      children: [
-        for (final word in wordList)
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              for (final letter in word.split(''))
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    width: contwidth,
-                    height: contHeight,
-                    decoration: BoxDecoration(
-                      color: MyColors.parchmentDark.withValues(alpha: 0.5),
-                    ),
-                    child: Center(
-                      child: Roboto(
-                        text: letter,
-                        fontsize: Fontsize.mobileH2,
-                        fontWeight: FontWeight.bold,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        const gap = 4.0;
+        final w = tileWidthFor(
+          widget.levelword,
+          constraints.maxWidth,
+          gap: gap,
+        );
+        final h = w * 4 / 3;
+
+        return Wrap(
+          alignment: WrapAlignment.center,
+          runSpacing: 8,
+          spacing: 16,
+          children: [
+            for (final word in wordList)
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  for (final letter in word.split(''))
+                    Padding(
+                      padding: const EdgeInsets.all(gap),
+                      child: Container(
+                        width: w,
+                        height: h,
+                        decoration: BoxDecoration(
+                          color: MyColors.parchmentDark.withValues(alpha: 0.5),
+                        ),
+                        child: Center(
+                          child: FittedBox(
+                            // shrinks the letter with the tile
+                            fit: BoxFit.scaleDown,
+                            child: Roboto(
+                              text: letter,
+                              fontsize: Fontsize.mobileH2,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-            ],
-          ),
-      ],
+                ],
+              ),
+          ],
+        );
+      },
     );
   }
 }
 
 class AnswerInput extends StatefulWidget {
-  final int curLvl;
+  final String levelWord;
+
   final List<String> userInput;
   final VoidCallback pressedHints;
   final VoidCallback pressedCheck;
   const AnswerInput({
-    required this.curLvl,
+    required this.levelWord,
     required this.userInput,
-    super.key,
     required this.pressedHints,
     required this.pressedCheck,
+    super.key,
   });
 
   @override
@@ -306,15 +352,12 @@ class AnswerInput extends StatefulWidget {
 }
 
 class _AnswerInputState extends State<AnswerInput> {
-  static double contwidth = 30;
-  static double contHeight = 40;
+  Widget _buildSlots(double maxWidth) {
+    const gap = 4.0;
+    final w = tileWidthFor(widget.levelWord, maxWidth, gap: gap);
+    final h = w * 4 / 3;
 
-  Widget _buildSlots() {
-    //
-    final wordList = Category1.wordsToGuess[widget.curLvl].trim().split(
-      RegExp(r'\s+'),
-    );
-
+    final wordList = widget.levelWord.trim().split(RegExp(r'\s+'));
     int index = 0; // counts every letter slot across all words
     final wordWidgets = <Widget>[];
 
@@ -328,20 +371,23 @@ class _AnswerInputState extends State<AnswerInput> {
 
         slots.add(
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(gap),
             child: Container(
-              width: contwidth,
-              height: contHeight,
+              width: w,
+              height: h,
               decoration: BoxDecoration(
                 border: Border(
                   bottom: BorderSide(color: MyColors.ink, width: 2),
                 ),
               ),
               child: Center(
-                child: Roboto(
-                  text: typed,
-                  fontsize: Fontsize.mobileH2,
-                  fontWeight: FontWeight.bold,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Roboto(
+                    text: typed,
+                    fontsize: Fontsize.mobileH2,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -357,7 +403,7 @@ class _AnswerInputState extends State<AnswerInput> {
     return Wrap(
       alignment: WrapAlignment.center,
       runSpacing: 8,
-      spacing: 24,
+      spacing: 16,
       children: wordWidgets,
     );
   }
@@ -365,11 +411,14 @@ class _AnswerInputState extends State<AnswerInput> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(10, 0, 10, 36),
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 36),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildSlots(),
+          LayoutBuilder(
+            builder: (context, constraints) =>
+                _buildSlots(constraints.maxWidth),
+          ),
           const SizedBox(height: 24),
           HintandCheckButtons(
             onHint: widget.pressedHints,
@@ -391,7 +440,7 @@ class GameKeyboard extends StatelessWidget {
     required this.onBackspace,
   });
 
-  static const _rows = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
+  static const _rows = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBÑNM'];
 
   @override
   Widget build(BuildContext context) {

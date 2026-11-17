@@ -1,9 +1,22 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gerphis_game/Pages/HomeScreen.dart';
 import 'package:gerphis_game/core/constants/colors.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
+  runApp(
+    DevicePreview(enabled: !kReleaseMode, builder: (context) => const MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {

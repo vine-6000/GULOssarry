@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:gerphis_game/Functions/Categories.dart';
 
 import 'package:gerphis_game/core/constants/Fonts.dart';
 import 'package:gerphis_game/core/constants/colors.dart';
 import 'package:gerphis_game/core/constants/fontsizes.dart';
 
-
-class LVL1LoadingWidget extends StatefulWidget {
-  const LVL1LoadingWidget({super.key});
+class LoadingPageWidget extends StatefulWidget {
+  final int categorycount;
+  const LoadingPageWidget({required this.categorycount, super.key});
 
   @override
-  State<LVL1LoadingWidget> createState() => _LVL1LoadingWidgetState();
+  State<LoadingPageWidget> createState() => _LoadingPageWidgetState();
 }
 
-class _LVL1LoadingWidgetState extends State<LVL1LoadingWidget> {
+class _LoadingPageWidgetState extends State<LoadingPageWidget> {
   static const double containerSize = 10;
 
   List<Color> myColors = [
@@ -30,16 +31,17 @@ class _LVL1LoadingWidgetState extends State<LVL1LoadingWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Tagesschrift(
-              text: "Level 1!",
+              text: "Level ${widget.categorycount}!",
               fontsize: Fontsize.mobileH1,
-              fontcolor: MyColors.moss,
+              fontcolor: categories[widget.categorycount].displayColor,
               fontWeight: FontWeight.bold,
             ),
             const SizedBox(height: 30),
             Tagesschrift(
-              text: "Difficulty - Easy",
+              text:
+                  "Difficulty - ${categories[widget.categorycount].difficulty}",
               fontsize: Fontsize.mobileH3,
-              fontcolor: MyColors.moss,
+              fontcolor: categories[widget.categorycount].displayColor,
               fontWeight: FontWeight.bold,
             ),
           ],

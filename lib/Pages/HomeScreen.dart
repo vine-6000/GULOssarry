@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gerphis_game/Pages/Levels/Level1Files/Level1.dart';
+import 'package:gerphis_game/Pages/LevelManager/LevelChoice.dart';
+
 import 'package:gerphis_game/core/constants/colors.dart';
 import 'package:gerphis_game/core/constants/fonts.dart';
 import 'package:gerphis_game/core/constants/fontsizes.dart';
@@ -13,7 +14,7 @@ class Homescreen extends StatefulWidget {
 
 class _HomescreenState extends State<Homescreen> {
   void _onStart() {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => Level1()));
+    Navigator.push(context, MaterialPageRoute(builder: (_) => Levelchoice()));
   }
 
   @override
@@ -48,9 +49,10 @@ class _HomescreenState extends State<Homescreen> {
                   ),
                   const SizedBox(height: 12),
                   const PtSerif(
-                    text: "idk ano lalagy ko pa :P",
+                    text: "Ikaw ba ay may kaalaman sa ating kasaysayan?",
                     fontStyle: FontStyle.italic,
                     fontsize: Fontsize.mobileH3,
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 48),
                   ElevatedButton(
