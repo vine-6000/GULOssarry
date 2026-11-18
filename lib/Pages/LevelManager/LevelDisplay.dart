@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:gerphis_game/Functions/Categories.dart';
+import 'package:gerphis_game/Functions/CategorieList.dart';
 import 'package:gerphis_game/Functions/WordScrambler.dart';
 import 'package:gerphis_game/Pages/LevelManager/Buttons.dart';
 import 'package:gerphis_game/Pages/LevelManager/LoadingPage.dart';
@@ -28,7 +28,7 @@ class _LevelDisplayState extends State<LevelDisplay> {
   List<String> userTyped = [];
   int curQuestionCount = 0;
   late int curCategory = widget.categorycount;
-  int hintsRemaining = 5;
+  late int hintsRemaining = levelHintamount;
 
   //Main
   String get levelCategory => categories[curCategory].category;
@@ -38,6 +38,7 @@ class _LevelDisplayState extends State<LevelDisplay> {
   String get levelHint => categories[curCategory].items[curQuestionCount].hint;
   String get levelFact =>
       categories[curCategory].items[curQuestionCount - 1].fact;
+  int get levelHintamount => categories[curCategory].hintCount;
 
   //sub
   int get totalQuestionCount => categories[curCategory].items.length;
@@ -48,18 +49,15 @@ class _LevelDisplayState extends State<LevelDisplay> {
   late int totalLetters = lettersCount;
 
   void kyboardPressed(String userInput) {
-    //add pinaka bago tinype ni user
-    //limit amount of letters na pwede ma type
-    if (userTyped.length < lettersCount) userTyped.add(userInput);
-    setState(() {});
+    if (userTyped.length < lettersCount) {
+      setState(() => userTyped.add(userInput));
+    }
   }
 
   void backspacePressed() {
-    //remove pinaka huli na tinype ni user
-    //limit amoutn of letters na pwede alisin
-    if (userTyped.isNotEmpty) userTyped.removeAt(userTyped.length - 1);
-
-    setState(() {});
+    if (userTyped.isNotEmpty) {
+      setState(() => userTyped.removeAt(userTyped.length - 1));
+    }
   }
 
   void checkPressed() {
@@ -68,7 +66,7 @@ class _LevelDisplayState extends State<LevelDisplay> {
     if (userimput == answerkey) {
       if (curQuestionCount == (totalQuestionCount - 1)) {
         //Show this after the last question
-        finishedDialog(context, "CONGRATS!", "Level 1 Finished!");
+        finishedDialog(context, "CONGRATS!", "Level 1 Finished!", levelFact);
         showBeautifulSnackBar(
           context,
           message: "CORRECT!!",
@@ -97,11 +95,19 @@ class _LevelDisplayState extends State<LevelDisplay> {
   }
 
   void hintPressed() {
+    if (hintsRemaining == 0) {
+      showBeautifulSnackBar(
+        context,
+        message: "You have ran out of Hints!",
+        type: SnackBarType.info,
+      );
+      return;
+    }
     dialogBox(context, true, "Hint!", levelHint);
     setState(() => hintsRemaining--);
   }
 
-  int timerCounter = 5;
+  int timerCounter = 4;
   Timer? _timer;
   void _startTimer() {
     _timer?.cancel();
@@ -134,38 +140,52 @@ class _LevelDisplayState extends State<LevelDisplay> {
         ? Scaffold(
             body: SafeArea(
               child: SizedBox.expand(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      category,
-                      const SizedBox(height: 8),
-                      lvlRmaining,
-                      const SizedBox(height: 16),
-                      HintsPill(hints: hintsRemaining),
-
-                      Expanded(
-                        child: Center(
-                          child: DisplayWords(
-                            key: ValueKey(curQuestionCount),
-                            levelword: levelwordtoguess,
-                          ),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          children: [
+                            category,
+                            const SizedBox(height: 8),
+                            lvlRmaining,
+                            const SizedBox(height: 16),
+                            HintsPill(hints: hintsRemaining),
+                            const SizedBox(height: 26),
+                            Expanded(
+                              child: Center(
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      DisplayWords(
+                                        key: ValueKey(curQuestionCount),
+                                        levelword: levelwordtoguess,
+                                      ),
+                                      const SizedBox(height: 26),
+                                      AnswerInput(
+                                        levelWord: levelwordtoguess,
+                                        userInput: userTyped,
+                                        pressedHints: hintPressed,
+                                        pressedCheck: checkPressed,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
+                    ),
 
-                      AnswerInput(
-                        levelWord: levelwordtoguess,
-                        userInput: userTyped,
-                        pressedHints: hintPressed,
-                        pressedCheck: checkPressed,
-                      ),
-                      GameKeyboard(
-                        onKey: kyboardPressed,
-                        onBackspace: backspacePressed,
-                      ),
-                      const SizedBox(height: 12),
-                    ],
-                  ),
+                    GameKeyboard(
+                      onKey: kyboardPressed,
+                      onBackspace: backspacePressed,
+                    ),
+                    const SizedBox(height: 12),
+                  ],
                 ),
               ),
             ),
@@ -444,48 +464,71 @@ class GameKeyboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        const gap = 6.0;
-        final keyWidth = constraints.maxWidth / 10 - gap;
-        final keyHeight = keyWidth * 1.3;
+    return Container(
+      decoration: BoxDecoration(
+        color: MyColors.parchment,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.25),
+            offset: const Offset(
+              0,
+              -6,
+            ), // negative y = shadow above the container
+            blurRadius: 8,
+            spreadRadius:
+                -4, // pulls the shadow in from the left and right edges
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(24, 5, 24, 0),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            const gap = 6.0;
+            final keyWidth = constraints.maxWidth / 10 - gap;
+            final keyHeight = keyWidth * 1.3;
 
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            for (int r = 0; r < _rows.length; r++)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: gap / 2),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    for (final letter in _rows[r].split(''))
-                      _Key(
-                        width: keyWidth,
-                        height: keyHeight,
-                        gap: gap,
-                        onTap: () => onKey(letter),
-                        child: Roboto(
-                          text: letter,
-                          fontsize: Fontsize.mobileH3,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    // backspace sits at the end of the last row
-                    if (r == _rows.length - 1)
-                      _Key(
-                        width: keyWidth,
-                        height: keyHeight,
-                        gap: gap,
-                        onTap: onBackspace,
-                        child: const Icon(Icons.backspace_outlined, size: 20),
-                      ),
-                  ],
-                ),
-              ),
-          ],
-        );
-      },
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                for (int r = 0; r < _rows.length; r++)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: gap / 2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        for (final letter in _rows[r].split(''))
+                          _Key(
+                            width: keyWidth,
+                            height: keyHeight,
+                            gap: gap,
+                            onTap: () => onKey(letter),
+                            child: Roboto(
+                              text: letter,
+                              fontsize: Fontsize.mobileH3,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        // backspace sits at the end of the last row
+                        if (r == _rows.length - 1)
+                          _Key(
+                            width: keyWidth,
+                            height: keyHeight,
+                            gap: gap,
+                            onTap: onBackspace,
+                            child: const Icon(
+                              Icons.backspace_outlined,
+                              size: 20,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }

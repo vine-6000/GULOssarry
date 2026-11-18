@@ -4,7 +4,7 @@ import 'package:gerphis_game/core/Widgets/Snakcbar.dart';
 import 'package:gerphis_game/core/constants/colors.dart';
 import 'package:gerphis_game/core/constants/fonts.dart';
 import 'package:gerphis_game/core/constants/fontsizes.dart';
-import '../../Functions/Categories.dart';
+import '../../Functions/CategorieList.dart';
 
 class Levelchoice extends StatelessWidget {
   const Levelchoice({super.key});
@@ -44,14 +44,6 @@ class Levelchoice extends StatelessWidget {
                           ),
                         ),
                       );
-                      if (i != 0) {
-                        showBeautifulSnackBar(
-                          context,
-                          message:
-                              "THIS LEVEL HAS NOT BEEN PROPERLY TESTED BY ME ;-; EXPECT BUGS (or sana wala)",
-                          type: SnackBarType.warning,
-                        );
-                      }
                     },
                   ),
               ],
@@ -104,6 +96,7 @@ class _LevelCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Roboto(
+                      fontStyle: FontStyle.italic,
                       text: categories.category,
                       fontWeight: FontWeight.bold,
                       fontsize: Fontsize.mobileH2,

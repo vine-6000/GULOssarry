@@ -6,6 +6,7 @@ List<Category> categories = [
     difficulty: "Easy",
     category: "Officials",
     displayColor: MyColors.moss,
+    hintCount: 6,
     items: [
       (
         word: 'MANUEL QUEZON',
@@ -49,6 +50,7 @@ List<Category> categories = [
     difficulty: "Easy",
     category: "Schools",
     displayColor: MyColors.moss,
+    hintCount: 4,
     items: [
       (
         word: 'ARELLANO HIGH SCHOOL',
@@ -80,6 +82,7 @@ List<Category> categories = [
     difficulty: "Medium",
     category: "Places",
     displayColor: MyColors.amber,
+    hintCount: 5,
     items: [
       (
         word: 'MANILA',
@@ -98,6 +101,7 @@ List<Category> categories = [
     difficulty: "Hard",
     category: "Policies",
     displayColor: MyColors.brick,
+    hintCount: 3,
     items: [
       (
         word: 'NATIONAL DEFENSE ACT',
@@ -121,10 +125,12 @@ List<Category> categories = [
     difficulty: "Very Hard",
     category: "Mission for Independence",
     displayColor: MyColors.blood,
+    hintCount: 4,
+
     items: [
       (word: 'OSROX MISSION', hint: 'N/A - hint', fact: 'N/A - fact'),
       (word: 'HARE HAWES CUTTING BILL', hint: 'N/A - hint', fact: 'N/A - fact'),
-      (word: 'TYDINGS-MCDUFFIE ACT', hint: 'N/A - hint', fact: 'N/A - fact'),
+      (word: 'TYDINGS MCDUFFIE ACT', hint: 'N/A - hint', fact: 'N/A - fact'),
       (word: 'JONES LAW', hint: 'N/A - hint', fact: 'N/A - fact'),
     ],
   ),
@@ -134,6 +140,7 @@ class Category {
   final String difficulty;
   final String category;
   final Color displayColor;
+  late int hintCount;
 
   final List<({String word, String hint, String fact})> items;
 
@@ -141,6 +148,7 @@ class Category {
     required this.difficulty,
     required this.category,
     required this.displayColor,
+    required this.hintCount,
     required this.items,
   });
 }
