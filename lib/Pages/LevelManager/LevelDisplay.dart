@@ -484,7 +484,7 @@ class GameKeyboard extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: EdgeInsets.fromLTRB(24, 5, 24, 0),
+        padding: EdgeInsets.fromLTRB(24, 5, 24, 36),
         child: LayoutBuilder(
           builder: (context, constraints) {
             const gap = 6.0;
