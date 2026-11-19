@@ -29,7 +29,6 @@ class _LevelDisplayState extends State<LevelDisplay> {
   int curQuestionCount = 0;
   late int curCategory = widget.categorycount;
   late int hintsRemaining = levelHintamount;
-
   //Main
   String get levelCategory => categories[curCategory].category;
   String get levelDifficulty => categories[curCategory].difficulty;
@@ -39,7 +38,6 @@ class _LevelDisplayState extends State<LevelDisplay> {
   String get levelFact =>
       categories[curCategory].items[curQuestionCount - 1].fact;
   int get levelHintamount => categories[curCategory].hintCount;
-
   //sub
   int get totalQuestionCount => categories[curCategory].items.length;
   int get totalCategoryCount => categories.length;
@@ -66,7 +64,12 @@ class _LevelDisplayState extends State<LevelDisplay> {
     if (userimput == answerkey) {
       if (curQuestionCount == (totalQuestionCount - 1)) {
         //Show this after the last question
-        finishedDialog(context, "CONGRATS!", "Level 1 Finished!", levelFact);
+        finishedDialog(
+          context,
+          "CONGRATS!",
+          "Level ${curCategory + 1} Finished!",
+          levelFact,
+        );
         showBeautifulSnackBar(
           context,
           message: "CORRECT!!",

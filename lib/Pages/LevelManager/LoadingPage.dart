@@ -41,7 +41,6 @@ class _LoadingPageWidgetState extends State<LoadingPageWidget>
   double _boxOffset(int i, double t) {
     final phase = t - i * stagger;
     if (phase < 0 || phase >= jumps) {
-      print(jumps);
       return 0;
     }
 
