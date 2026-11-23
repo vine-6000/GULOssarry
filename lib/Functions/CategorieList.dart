@@ -60,9 +60,9 @@ List<Category> categories = [
       ),
       (
         word: 'UNIBERSIDAD NG PILIPINAS',
-        hint: 'The national university of the Philippines',
+        hint: 'Top 1 University in the Philippines',
         fact:
-            'The University of the Philippines was established in 1908 through Act No. 1870 of the Philippine Legislature.',
+            'UP was created by Act No. 1870 on June 18, 1908, but its College of Medicine actually predates the university: it began as the Philippine Medical School in 1905.',
       ),
       (
         word: 'DE LA SALLE UNIVERSITY',
@@ -72,9 +72,9 @@ List<Category> categories = [
       ),
       (
         word: 'SAN BEDA UNIVERSITY',
-        hint: 'Its sports teams are called the Red Lions',
+        hint: 'One of the known law schools',
         fact:
-            'San Beda was founded in Manila in 1901 by Benedictine monks and is named after Saint Bede the Venerable, an English monk.',
+            'Despite its 1901 founding, San Beda was formally a college for most of its history; it became San Beda University in 2018 under Fr. Aloysius Maranan, who was the final rector-president of the college and the first president of the university.',
       ),
     ],
   ),
@@ -82,19 +82,44 @@ List<Category> categories = [
     difficulty: "Medium",
     category: "Places",
     displayColor: MyColors.amber,
-    hintCount: 5,
+    hintCount: 6,
     items: [
       (
         word: 'MANILA',
-        hint: 'N/A - hint',
+        hint: 'The capital of the Philippines',
         fact:
-            'During World War II, Manila was declared an "Open City" on December 26, 1941, by General Douglas MacArthur to prevent further destruction and protect its civilian population from the advancing Japanese forces. Despite this declaration, Japanese forces continued bombing the city and eventually occupied it on January 2, 1942.',
+            'During World War II, Manila was declared an "Open City" on December 26, 1941, by General Douglas MacArthur to prevent further destruction and protect its civilian population from the advancing Japanese forces. Despite this declaration, Japanese forces continued bombing the city towards its eventual occupancy on January 2, 1942.',
       ),
-      (word: 'PEARL HARBOR', hint: 'N/A - hint', fact: 'N/A - fact'),
-      (word: 'BATAAN', hint: 'N/A - hint', fact: 'N/A - fact'),
-      (word: 'WASHINGTON DC', hint: 'N/A - hint', fact: 'N/A - fact'),
-      (word: 'INTRAMUROS', hint: 'N/A - hint', fact: 'N/A - fact'),
-      (word: 'RIZAL PARK', hint: 'N/A - hint', fact: 'N/A - fact'),
+      (
+        word: 'PEARL HARBOR',
+        hint: 'US Navy Base and headquarters for the US Pacific Fleet',
+        fact:
+            'Admiral Isoroku Yamamoto, the operation\'s principal architect, had previously lived in the United States as a naval attaché and traveled widely on a modest stipend.',
+      ),
+      (
+        word: 'BATAAN',
+        hint: 'Pivotal role in World War II',
+        fact:
+            'Bataan Technology Park in Morong was once the Philippine Refugee Processing Center, which sheltered roughly 400,000 refugees from Vietnam, Laos, and Cambodia over 14 years.',
+      ),
+      (
+        word: 'WASHINGTON DC',
+        hint: 'The capital of the USA',
+        fact:
+            'D.C. is not a state, but it is more populous than several states and has its own local government, mayor, and council.',
+      ),
+      (
+        word: 'INTRAMUROS',
+        hint: 'Center of Spanish colonial rule in the Philippines',
+        fact:
+            'Intramuros was enclosed by walls with seven gates, each serving different purposes such as trade, military access, religious processions, and movement between the walled city and surrounding districts.',
+      ),
+      (
+        word: 'RIZAL PARK',
+        hint: 'Where the Rizal Monument is',
+        fact:
+            'The monument\'s design was selected through an international competition; the winning design came from Swiss sculptor Richard Kissling.',
+      ),
     ],
   ),
   Category(
