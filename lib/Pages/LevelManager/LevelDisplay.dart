@@ -35,8 +35,7 @@ class _LevelDisplayState extends State<LevelDisplay> {
   String get levelwordtoguess =>
       categories[curCategory].items[curQuestionCount].word;
   String get levelHint => categories[curCategory].items[curQuestionCount].hint;
-  String get levelFact =>
-      categories[curCategory].items[curQuestionCount - 1].fact;
+  String get levelFact => categories[curCategory].items[curQuestionCount].fact;
   int get levelHintamount => categories[curCategory].hintCount;
   //sub
   int get totalQuestionCount => categories[curCategory].items.length;
@@ -59,16 +58,17 @@ class _LevelDisplayState extends State<LevelDisplay> {
   }
 
   void checkPressed() {
-    String userimput = userTyped.join();
+    final userInput = userTyped.join();
 
-    if (userimput == answerkey) {
-      if (curQuestionCount == (totalQuestionCount - 1)) {
-        //Show this after the last question
+    if (userInput == answerkey) {
+      final fact = levelFact;
+
+      if (curQuestionCount == totalQuestionCount - 1) {
         finishedDialog(
           context,
           "CONGRATS!",
           "Level ${curCategory + 1} Finished!",
-          levelFact,
+          fact,
         );
         showBeautifulSnackBar(
           context,
@@ -77,12 +77,13 @@ class _LevelDisplayState extends State<LevelDisplay> {
         );
         return;
       }
+
       setState(() {
         userTyped.clear();
         curQuestionCount++;
         totalLetters = levelwordtoguess.replaceAll(RegExp(r'\s+'), '').length;
       });
-      dialogBox(context, false, "CONGRATS!", levelFact);
+      dialogBox(context, false, "CONGRATS!", fact);
       showBeautifulSnackBar(
         context,
         message: "CORRECT!!",

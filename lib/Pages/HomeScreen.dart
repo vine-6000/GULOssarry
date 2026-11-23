@@ -43,7 +43,7 @@ class _HomescreenState extends State<Homescreen> {
                   const Icon(Icons.account_balance, size: 64),
                   const SizedBox(height: 24),
                   ChlakFont1(
-                    text: "Gerphis Game!",
+                    text: "GULOssary",
                     fontsize: Fontsize.mobileH1,
                     fontWeight: FontWeight.w400,
                   ),
