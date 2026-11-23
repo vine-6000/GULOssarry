@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gerphis_game/Pages/HomeScreen.dart';
 import 'package:gerphis_game/core/constants/colors.dart';
+import 'dart:math';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         useMaterial3: true,
@@ -52,6 +54,44 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+      builder: (context, child) {
+        final size = MediaQuery.sizeOf(context);
+
+        // Phone: fill the screen as normal
+        if (size.shortestSide < 600) return child!;
+
+        // Larger device: phone-sized frame on a white background
+        const phoneWidth = 400.0;
+        const phoneHeight = 800.0;
+        final frameHeight = min(size.height, phoneHeight);
+
+        return Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                MyColors.parchment,
+                MyColors.gold.withOpacity(0.35),
+                MyColors.parchment,
+              ],
+              stops: const [0.0, 0.5, 1.0],
+            ),
+          ),
+          alignment: Alignment.center,
+          child: SizedBox(
+            width: phoneWidth,
+            height: frameHeight,
+            child: MediaQuery(
+              // Make the app think it's on a phone-sized screen
+              data: MediaQuery.of(
+                context,
+              ).copyWith(size: Size(phoneWidth, frameHeight)),
+              child: ClipRect(child: child),
+            ),
+          ),
+        );
+      },
       home: Homescreen(),
     );
   }
