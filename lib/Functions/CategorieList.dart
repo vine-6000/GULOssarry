@@ -6,11 +6,11 @@ List<Category> categories = [
     difficulty: "Easy",
     category: "Officials",
     displayColor: MyColors.moss,
-    hintCount: 6,
+    hintCount: 3,
     items: [
       (
         word: 'MANUEL QUEZON',
-        hint: 'A city in Metro Manila named after him',
+        hint: 'A city in Manila named after him',
         fact:
             'During the Japanese occupation, President Quezon led the Philippine Commonwealth Government-in-Exile in Washington, D.C., where he continued to represent the Philippines until his death in 1944.',
       ),
@@ -18,31 +18,19 @@ List<Category> categories = [
         word: 'SERGIO OSMEÑA',
         hint: 'He served the shortest term as President',
         fact:
-            'Sergio Osmeña and Manuel Roxas led the OsRox Mission in 1931, which secured the Hare-Hawes-Cutting Act in 1933, the first US law to set a definite timeline for Philippine independence.',
-      ),
-      (
-        word: 'MANUEL ROXAS',
-        hint: 'Last President of the Commonwealth Government',
-        fact:
-            'Manuel Roxas was one of the members of the Constitutional Convention that drafted the 1935 Constitution.',
-      ),
-      (
-        word: 'WILLIAM HOWARD TAFT',
-        hint: 'An avenue is named after him',
-        fact:
-            'William Howard Taft was the first American Civil Governor of the Philippines.',
+            'Sergio Osmeña and Manuel Roxas led the OsRox Mission in 1931, which successfully secured the Hare-Hawes-Cutting Act in 1933, the first US law to establish a definite timeline for Philippine independence.',
       ),
       (
         word: 'FRANCIS BURTON HARRISON',
         hint: 'A street was named after him',
         fact:
-            'Francis Burton Harrison was a former American Governor-General of the Philippines and the first American to acquire Filipino citizenship through a special act in 1936.',
+            'Francis Burton Harrison was a former American Civil Governor-General of the Philippines and the first American to acquire Filipino citizenship through a special act in 1936.',
       ),
       (
         word: 'DOUGLAS MACARTHUR',
         hint: 'Famous quote: "I shall return"',
         fact:
-            'Douglas MacArthur made his famous promise, "I shall return," during World War II after leaving the Philippines, to assure Filipinos and the soldiers left behind that he intended to come back and help free the country.',
+            'Douglas MacArthur made his famous promise, "I shall return," during World War II before leaving the Philippines. He said this to assure the Filipino people and soldiers he was leaving behind that he intended to return and help free the country.',
       ),
     ],
   ),
@@ -50,7 +38,7 @@ List<Category> categories = [
     difficulty: "Easy",
     category: "Schools",
     displayColor: MyColors.moss,
-    hintCount: 4,
+    hintCount: 3,
     items: [
       (
         word: 'ARELLANO HIGH SCHOOL',
@@ -59,13 +47,13 @@ List<Category> categories = [
             'Arellano High School was formerly known as Manila North High School before being renamed in 1930 in honor of Cayetano S. Arellano, the first Filipino Chief Justice of the Supreme Court.',
       ),
       (
-        word: 'UNIBERSIDAD NG PILIPINAS',
+        word: 'UNIVERSITY OF THE PHILIPPINES',
         hint: 'Top 1 University in the Philippines',
         fact:
             'UP was created by Act No. 1870 on June 18, 1908, but its College of Medicine actually predates the university: it began as the Philippine Medical School in 1905.',
       ),
       (
-        word: 'DE LA SALLE UNIVERSITY',
+        word: 'DE LA SALLE COLLEGE',
         hint: 'It was built during the American period, not Spanish.',
         fact:
             'During the Battle of Manila in 1945, De La Salle College became a refuge for Filipino families and Christian Brothers escaping the war. However, on February 12, Japanese soldiers stormed the campus and massacred 41 people, including 16 Christian Brothers and 25 civilians.',
@@ -82,7 +70,7 @@ List<Category> categories = [
     difficulty: "Medium",
     category: "Places",
     displayColor: MyColors.amber,
-    hintCount: 6,
+    hintCount: 3,
     items: [
       (
         word: 'MANILA',
@@ -94,31 +82,19 @@ List<Category> categories = [
         word: 'PEARL HARBOR',
         hint: 'US Navy Base and headquarters for the US Pacific Fleet',
         fact:
-            'Admiral Isoroku Yamamoto, the operation\'s principal architect, had previously lived in the United States as a naval attaché and traveled widely on a modest stipend.',
+            'Although the attack on Pearl Harbor occurred on December 7, 1941, in Hawaii, Japan launched its attacks on the Philippines on December 8, 1941. This marked the beginning of the Japanese invasion of the Philippines.',
       ),
       (
         word: 'BATAAN',
         hint: 'Pivotal role in World War II',
         fact:
-            'Bataan Technology Park in Morong was once the Philippine Refugee Processing Center, which sheltered roughly 400,000 refugees from Vietnam, Laos, and Cambodia over 14 years.',
+            'The Bataan Death March occurred in April 1942, when approximately 76,000 Filipino and American prisoners of war were forced by Japanese soldiers to march around 66 miles from Bataan to San Fernando before being transported to Capas and eventually Camp O\'Donnell.',
       ),
       (
         word: 'WASHINGTON DC',
         hint: 'The capital of the USA',
         fact:
-            'D.C. is not a state, but it is more populous than several states and has its own local government, mayor, and council.',
-      ),
-      (
-        word: 'INTRAMUROS',
-        hint: 'Center of Spanish colonial rule in the Philippines',
-        fact:
-            'Intramuros was enclosed by walls with seven gates, each serving different purposes such as trade, military access, religious processions, and movement between the walled city and surrounding districts.',
-      ),
-      (
-        word: 'RIZAL PARK',
-        hint: 'Where the Rizal Monument is',
-        fact:
-            'The monument\'s design was selected through an international competition; the winning design came from Swiss sculptor Richard Kissling.',
+            'During WWII, Washington, D.C. served as the center of the Philippine government in exile from 1942 to 1944.',
       ),
     ],
   ),
@@ -130,19 +106,28 @@ List<Category> categories = [
     items: [
       (
         word: 'NATIONAL DEFENSE ACT',
-        hint: 'Reserve Officers\' Training Corps (ROTC)',
-        fact: 'N/A - fact',
+        hint:
+            'Reserve Officers\' Training Corps (ROTC): college based military training program',
+        fact:
+            'The National Defense Act of 1935 was created to prepare the Philippines for possible war and foreign invasion.',
       ),
       (
         word: 'SUFFRAGE FOR WOMEN',
-        hint: 'N/A - hint',
+        hint: 'The right to vote for women',
         fact:
             'The Philippines was one of the first Asian countries to allow the right for women to vote.',
       ),
       (
         word: 'NATIONAL LANGUAGE POLICY',
-        hint: 'N/A - hint',
-        fact: 'N/A - fact',
+        hint: 'Filipino is our official language',
+        fact:
+            'President Manuel L. Quezon declared Tagalog as the basis of the Philippine national language in 1937 to promote unity and communication among Filipinos from different regions.',
+      ),
+      (
+        word: 'ECONOMIC POLICY',
+        hint: 'Concept of Free Trade',
+        fact:
+            'During the American colonial period and the Commonwealth era, Philippine products such as sugar, tobacco, and coconut products could enter the U.S. market with little or no tariffs, making it easier for Filipino exporters to sell their goods in America.',
       ),
     ],
   ),
@@ -150,13 +135,32 @@ List<Category> categories = [
     difficulty: "Very Hard",
     category: "Mission for Independence",
     displayColor: MyColors.blood,
-    hintCount: 4,
-
+    hintCount: 3,
     items: [
-      (word: 'OSROX MISSION', hint: 'N/A - hint', fact: 'N/A - fact'),
-      (word: 'HARE HAWES CUTTING BILL', hint: 'N/A - hint', fact: 'N/A - fact'),
-      (word: 'TYDINGS MCDUFFIE ACT', hint: 'N/A - hint', fact: 'N/A - fact'),
-      (word: 'JONES LAW', hint: 'N/A - hint', fact: 'N/A - fact'),
+      (
+        word: 'OSROX MISSION',
+        hint: 'Lobbying US Congress for Philippine independence',
+        fact:
+            'The OsRox Mission, led by Sergio Osmeña and Manuel Roxas in 1931, successfully secured the passage of the Hare-Hawes-Cutting Act in the United States in 1933.',
+      ),
+      (
+        word: 'HARE HAWES CUTTING BILL',
+        hint: 'First US law for Philippine independence',
+        fact:
+            'The Hare-Hawes-Cutting Act of 1933 was the first U.S. law to set a definite timetable for Philippine independence. It promised independence after a 10-year transition period, but was rejected by the Philippine Legislature because of controversial provisions, including the retention of American military and naval bases in the Philippines.',
+      ),
+      (
+        word: 'TYDINGS MCDUFFIE ACT',
+        hint: 'Setting the timeline and framework for Philippine independence',
+        fact:
+            'It established the 10-year transition period that led to Philippine independence in 1946.',
+      ),
+      (
+        word: 'JONES LAW',
+        hint: 'First fully elected Philippine legislature',
+        fact:
+            'It contained the first official U.S. legislative promise to recognize Philippine independence.',
+      ),
     ],
   ),
 ];
