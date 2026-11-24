@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         final size = MediaQuery.sizeOf(context);
 
-        // Phone: fill the screen as normal
+        // Child means Homescreen()
         if (size.shortestSide < 600) return child!;
 
         // Larger device: phone-sized frame on a white background
