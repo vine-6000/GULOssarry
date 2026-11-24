@@ -27,6 +27,7 @@ class LevelDisplay extends StatefulWidget {
 class _LevelDisplayState extends State<LevelDisplay> {
   List<String> userTyped = [];
   int curQuestionCount = 0;
+  bool disableHintButton = false;
   late int curCategory = widget.categorycount;
   late int hintsRemaining = levelHintamount;
   //Main
@@ -80,6 +81,7 @@ class _LevelDisplayState extends State<LevelDisplay> {
 
       setState(() {
         userTyped.clear();
+        disableHintButton = false;
         curQuestionCount++;
         totalLetters = levelwordtoguess.replaceAll(RegExp(r'\s+'), '').length;
       });
@@ -107,6 +109,7 @@ class _LevelDisplayState extends State<LevelDisplay> {
       );
       return;
     }
+    disableHintButton = true;
     dialogBox(context, true, "Hint!", levelHint);
     setState(() => hintsRemaining--);
   }
@@ -169,6 +172,7 @@ class _LevelDisplayState extends State<LevelDisplay> {
                                       ),
                                       const SizedBox(height: 26),
                                       AnswerInput(
+                                        disableHintButton: disableHintButton,
                                         levelWord: levelwordtoguess,
                                         userInput: userTyped,
                                         pressedHints: hintPressed,
@@ -363,11 +367,13 @@ class AnswerInput extends StatefulWidget {
   final List<String> userInput;
   final VoidCallback pressedHints;
   final VoidCallback pressedCheck;
+  final bool disableHintButton;
   const AnswerInput({
     required this.levelWord,
     required this.userInput,
     required this.pressedHints,
     required this.pressedCheck,
+    required this.disableHintButton,
     super.key,
   });
 
@@ -445,6 +451,7 @@ class _AnswerInputState extends State<AnswerInput> {
           ),
           const SizedBox(height: 24),
           HintandCheckButtons(
+            disableHintButton: widget.disableHintButton,
             onHint: widget.pressedHints,
             onCheck: widget.pressedCheck,
           ),

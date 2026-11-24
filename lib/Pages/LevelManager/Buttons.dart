@@ -6,11 +6,13 @@ import 'package:gerphis_game/core/constants/colors.dart';
 class HintandCheckButtons extends StatelessWidget {
   final VoidCallback onHint;
   final VoidCallback onCheck;
+  final bool disableHintButton;
 
   const HintandCheckButtons({
     super.key,
     required this.onHint,
     required this.onCheck,
+    required this.disableHintButton,
   });
 
   @override
@@ -23,6 +25,7 @@ class HintandCheckButtons extends StatelessWidget {
           onPressed: onHint,
           background: MyColors.parchmentDark.withValues(alpha: 0.5),
           foreground: MyColors.ink,
+          disablebutton: disableHintButton,
         ),
         const SizedBox(width: 16),
         _PillButton(
@@ -30,6 +33,7 @@ class HintandCheckButtons extends StatelessWidget {
           onPressed: onCheck,
           background: MyColors.brick,
           foreground: MyColors.parchment,
+          disablebutton: false,
         ),
       ],
     );
@@ -41,18 +45,20 @@ class _PillButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Color background;
   final Color foreground;
+  final bool disablebutton;
 
   const _PillButton({
     required this.label,
     required this.onPressed,
     required this.background,
     required this.foreground,
+    required this.disablebutton,
   });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: disablebutton ? null : onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: background,
         foregroundColor: foreground,
