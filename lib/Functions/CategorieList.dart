@@ -144,7 +144,7 @@ List<Category> categories = [
             'The OsRox Mission, led by Sergio Osmeña and Manuel Roxas in 1931, successfully secured the passage of the Hare-Hawes-Cutting Act in the United States in 1933.',
       ),
       (
-        word: 'HARE HAWES CUTTING BILL',
+        word: 'HARE HAWES CUTTING ACT',
         hint: 'First US law for Philippine independence',
         fact:
             'The Hare-Hawes-Cutting Act of 1933 was the first U.S. law to set a definite timetable for Philippine independence. It promised independence after a 10-year transition period, but was rejected by the Philippine Legislature because of controversial provisions, including the retention of American military and naval bases in the Philippines.',
